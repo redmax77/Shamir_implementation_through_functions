@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-// Расшириный Алгоритм Евклида
+// Р Р°СЃС€РёСЂРёРЅС‹Р№ РђР»РіРѕСЂРёС‚Рј Р•РІРєР»РёРґР°
 void extended_euclid(long a, long b, long *x, long *y, long *d)
 {
 	// calculates a * *x + b * *y = gcd(a, b) = *d 
@@ -36,7 +36,7 @@ void extended_euclid(long a, long b, long *x, long *y, long *d)
 	*d = a, *x = x2, *y = y2;
 }
 
-// Поиск Обратного элемента по умножению для функции взятия по модулю
+// РџРѕРёСЃРє РћР±СЂР°С‚РЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РїРѕ СѓРјРЅРѕР¶РµРЅРёСЋ РґР»СЏ С„СѓРЅРєС†РёРё РІР·СЏС‚РёСЏ РїРѕ РјРѕРґСѓР»СЋ
 long inverse(int element, _uint field_char)
 /* computes the inverse of a modulo n */
 {
@@ -54,7 +54,7 @@ long inverse(int element, _uint field_char)
 	return -1;
 }
 
-// Определение простого числа
+// РћРїСЂРµРґРµР»РµРЅРёРµ РїСЂРѕСЃС‚РѕРіРѕ С‡РёСЃР»Р°
 bool prime(_uint n) {
 	long long i;
 	n = (long long) n;
@@ -68,7 +68,7 @@ bool prime(_uint n) {
 	return true;
 }
 
-// Перемешивание Фишера - Йетса модифицированное
+// РџРµСЂРµРјРµС€РёРІР°РЅРёРµ Р¤РёС€РµСЂР° - Р™РµС‚СЃР° РјРѕРґРёС„РёС†РёСЂРѕРІР°РЅРЅРѕРµ
 void shuffle(_uint *array, int N)
 {
 	_uint i;
@@ -91,7 +91,7 @@ void shuffle(_uint *array, int N)
 	}
 }
 
-// Операция взятия по модулю
+// РћРїРµСЂР°С†РёСЏ РІР·СЏС‚РёСЏ РїРѕ РјРѕРґСѓР»СЋ
 int field(_uint field_char, int n, int parametr)
 {
 	// param = 0 => field_char << n 
@@ -131,7 +131,7 @@ int field(_uint field_char, int n, int parametr)
 	return n;
 }
 
-// Генерация коэффициентов для многочлена в переменную polynom
+// Р“РµРЅРµСЂР°С†РёСЏ РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РґР»СЏ РјРЅРѕРіРѕС‡Р»РµРЅР° РІ РїРµСЂРµРјРµРЅРЅСѓСЋ polynom
 int generate_coef_polyniom(_uint field_char, _uint min_number_of_members, _uint *polynom) 
 {
 	_uint i;
@@ -145,7 +145,7 @@ int generate_coef_polyniom(_uint field_char, _uint min_number_of_members, _uint 
 	return polynom[0];
 }
 
-// Вычисление секретов для участников в переменную calculated_values
+// Р’С‹С‡РёСЃР»РµРЅРёРµ СЃРµРєСЂРµС‚РѕРІ РґР»СЏ СѓС‡Р°СЃС‚РЅРёРєРѕРІ РІ РїРµСЂРµРјРµРЅРЅСѓСЋ calculated_values
 void find_min_number_of_members_and_1_values(_uint field_char, _uint min_number_of_members, _uint *polynom, _uint number_of_secter_parts, _uint *calculated_values) 
 {
 	_uint i;
@@ -162,7 +162,7 @@ void find_min_number_of_members_and_1_values(_uint field_char, _uint min_number_
 	}
 }
 
-// Генерация случайных участников в переменную members
+// Р“РµРЅРµСЂР°С†РёСЏ СЃР»СѓС‡Р°Р№РЅС‹С… СѓС‡Р°СЃС‚РЅРёРєРѕРІ РІ РїРµСЂРµРјРµРЅРЅСѓСЋ members
 void generate_users(_uint field_char, _uint min_number_of_members, _uint number_of_secter_parts, _uint *members)
 {
 	_uint i;
@@ -186,7 +186,7 @@ void generate_users(_uint field_char, _uint min_number_of_members, _uint number_
 	delete[] users_for_recover;
 }
 
-// Восстановление секрета - мультипликативная часть
+// Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЃРµРєСЂРµС‚Р° - РјСѓР»СЊС‚РёРїР»РёРєР°С‚РёРІРЅР°СЏ С‡Р°СЃС‚СЊ
 int recover_multiplicative_part_2(_uint field_char, _uint min_number_of_members, _uint *members, _uint j)
 {
 	int x = 1;
@@ -204,7 +204,7 @@ int recover_multiplicative_part_2(_uint field_char, _uint min_number_of_members,
 	return x;
 }
 
-// Восстановление секрета - аддитивная часть
+// Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЃРµРєСЂРµС‚Р° - Р°РґРґРёС‚РёРІРЅР°СЏ С‡Р°СЃС‚СЊ
 int recover_additive_part_1(_uint field_char, _uint min_number_of_members, _uint *members, _uint *calculated_values)
 {
 	_uint i;
@@ -221,21 +221,21 @@ int recover_additive_part_1(_uint field_char, _uint min_number_of_members, _uint
 
 int main()
 {
-	_uint field_char;					// Характеристика поля
-	_uint min_number_of_members;		// Минимальное количество участников разделения секрета
-	_uint number_of_secter_parts;		// Количество частей секрета
-	_uint secret;						// Сгенерированный секрет
-	_uint recovered_secret;				// Выщитанный секрет 
-	_uint *polynom = NULL;				// Сгенерированные коэффициенты многочлена
-	_uint *calculated_values = NULL;	// Вычесленные значения многочлена от всех участников
-	_uint *members = NULL;				// Список участников для восстановления секрета
-	bool p;								// Логическая проверка на простоту
+	_uint field_char;					// РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєР° РїРѕР»СЏ
+	_uint min_number_of_members;		// РњРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СѓС‡Р°СЃС‚РЅРёРєРѕРІ СЂР°Р·РґРµР»РµРЅРёСЏ СЃРµРєСЂРµС‚Р°
+	_uint number_of_secter_parts;		// РљРѕР»РёС‡РµСЃС‚РІРѕ С‡Р°СЃС‚РµР№ СЃРµРєСЂРµС‚Р°
+	_uint secret;						// РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ СЃРµРєСЂРµС‚
+	_uint recovered_secret;				// Р’С‹С‰РёС‚Р°РЅРЅС‹Р№ СЃРµРєСЂРµС‚ 
+	_uint *polynom = NULL;				// РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹ РјРЅРѕРіРѕС‡Р»РµРЅР°
+	_uint *calculated_values = NULL;	// Р’С‹С‡РµСЃР»РµРЅРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РјРЅРѕРіРѕС‡Р»РµРЅР° РѕС‚ РІСЃРµС… СѓС‡Р°СЃС‚РЅРёРєРѕРІ
+	_uint *members = NULL;				// РЎРїРёСЃРѕРє СѓС‡Р°СЃС‚РЅРёРєРѕРІ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЃРµРєСЂРµС‚Р°
+	bool p;								// Р›РѕРіРёС‡РµСЃРєР°СЏ РїСЂРѕРІРµСЂРєР° РЅР° РїСЂРѕСЃС‚РѕС‚Сѓ
 
 	cout << endl << "Enter PRIME field characteristic = ";
 	cin >> field_char;
 	p = prime(field_char);
 
-	// Проверка на простоту характеристики поля
+	// РџСЂРѕРІРµСЂРєР° РЅР° РїСЂРѕСЃС‚РѕС‚Сѓ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РїРѕР»СЏ
 	if (p == true)
 	{
 		cout << "Enter min number of members = ";
@@ -244,7 +244,7 @@ int main()
 		cin >> number_of_secter_parts;
 		cout << endl;
 
-		//Проверка входных параметров
+		//РџСЂРѕРІРµСЂРєР° РІС…РѕРґРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ
 		if (number_of_secter_parts > min_number_of_members)
 		{
 			polynom = new _uint[min_number_of_members];
