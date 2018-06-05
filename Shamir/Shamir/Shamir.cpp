@@ -8,12 +8,13 @@
 
 #define _uint unsigned int
 
+//typedef unsigned int _uint;
 using namespace std;
 
 // Расшириный Алгоритм Евклида
 void extended_euclid(long a, long b, long *x, long *y, long *d)
 {
-	// calculates a * *x + b * *y = gcd(a, b) = *d 
+	// calculates a * *x + b * *y = gcd(a, b) = *d
 
 	long q, r, x1, x2, y1, y2;
 
@@ -41,23 +42,23 @@ long inverse(int element, _uint field_char)
 /* computes the inverse of a modulo n */
 {
 	long a, n, d, x, y;
-	a = (long) element;
-	n = (long) field_char;
+	a = (long)element;
+	n = (long)field_char;
 
 	extended_euclid(a, n, &x, &y, &d);
 
 	if (d == 1)
 	{
-		return (int) x;
+		return (int)x;
 	}
 
-	return -1;
+	return 0;
 }
 
 // Определение простого числа
 bool prime(_uint n) {
 	long long i;
-	n = (long long) n;
+	n = (long long)n;
 	for (i = 2; i <= sqrt(n); i++)
 	{
 		if (n % i == 0)
@@ -82,8 +83,7 @@ void shuffle(_uint *array, int N)
 		do
 		{
 			j = rand() % (i + 1);;
-		}
-		while (j == 0);
+		} while (j == 0);
 
 		tmp = array[j];
 		array[j] = array[i];
@@ -94,14 +94,14 @@ void shuffle(_uint *array, int N)
 // Операция взятия по модулю
 int field(_uint field_char, int n, int parametr)
 {
-	// param = 0 => field_char << n 
+	// param = 0 => field_char << n
 	// param = 1 => -5
 	// param = 2 => 2^(-1)
-	
+
 	if (parametr < 0 && parametr > 2)
 	{
-		cout << endl << "Wrong parametr for mod N operation";
-		return -1;
+		cout << endl << "Wrong parameter for mod N operation";
+		return 0;
 	}
 	else
 	{
@@ -115,8 +115,7 @@ int field(_uint field_char, int n, int parametr)
 			do
 			{
 				n = n + field_char;
-			} 
-			while (n < 0);
+			} while (n < 0);
 		}
 		if (parametr == 2)
 		{
@@ -132,7 +131,7 @@ int field(_uint field_char, int n, int parametr)
 }
 
 // Генерация коэффициентов для многочлена в переменную polynom
-int generate_coef_polyniom(_uint field_char, _uint min_number_of_members, _uint *polynom) 
+int generate_coef_polyniom(_uint field_char, _uint min_number_of_members, _uint *polynom)
 {
 	_uint i;
 	srand(time(NULL));
@@ -146,17 +145,17 @@ int generate_coef_polyniom(_uint field_char, _uint min_number_of_members, _uint 
 }
 
 // Вычисление секретов для участников в переменную calculated_values
-void find_min_number_of_members_and_1_values(_uint field_char, _uint min_number_of_members, _uint *polynom, _uint number_of_secter_parts, _uint *calculated_values) 
+void find_min_number_of_members_and_1_values(_uint field_char, _uint min_number_of_members, _uint *polynom, _uint number_of_secter_parts, _uint *calculated_values)
 {
 	_uint i;
 	_uint j;
 	cout << endl;
-	for (j = 1; j < (number_of_secter_parts + 1); j ++)
+	for (j = 1; j < (number_of_secter_parts + 1); j++)
 	{
 		calculated_values[j] = 0;
 		for (i = 0; i < min_number_of_members; i++)
 		{
-			calculated_values[j] = (calculated_values[j] + (polynom[i] * (int) pow(j, i))) % field_char;
+			calculated_values[j] = (calculated_values[j] + (polynom[i] * (int)pow(j, i))) % field_char;
 		}
 		cout << "f(" << j << ") = " << calculated_values[j] << endl;
 	}
@@ -169,7 +168,7 @@ void generate_users(_uint field_char, _uint min_number_of_members, _uint number_
 	_uint *users_for_recover = NULL;
 	users_for_recover = new _uint[number_of_secter_parts + 1];
 
-	for ( i = 1; i < (number_of_secter_parts + 1); i++) 
+	for (i = 1; i < (number_of_secter_parts + 1); i++)
 	{
 		users_for_recover[i] = i;
 	}
@@ -190,17 +189,29 @@ void generate_users(_uint field_char, _uint min_number_of_members, _uint number_
 int recover_multiplicative_part_2(_uint field_char, _uint min_number_of_members, _uint *members, _uint j)
 {
 	int x = 1;
+	int y = 1;
 	_uint i;
-
+	//cout << "              j = " << j << "   members[j] = " << members[j] << endl;
 	for (i = 1; i < (min_number_of_members + 1); i++)
 	{
 		if (i != j)
 		{
 			//xi = xi [*, i!=j] (rj / (rj - ri)  % mod N)
-			x =  (x * (members[i] * field(field_char,(int)(members[i] - members[j]), 2))) % field_char;
+			y = members[i] - members[j];
+			//cout << "               members[i] - members[j] = " << y << endl;
+			if (y < 0)
+			{
+				y = field(field_char, y, 1);
+				//cout << "                       members[i] - members[j] + 13 = " << y << endl;
+			}
+
+			y = field(field_char, y, 2);
+			//cout << "                               (members[i] - members[j] + 13) * y = " << y << endl;
+			x = (x * (members[i] * y)) % field_char;
 		}
 	}
 
+	//cout << "S(" << members[j] << ") = " << x << endl;
 	return x;
 }
 
@@ -208,12 +219,14 @@ int recover_multiplicative_part_2(_uint field_char, _uint min_number_of_members,
 int recover_additive_part_1(_uint field_char, _uint min_number_of_members, _uint *members, _uint *calculated_values)
 {
 	_uint i;
+	int z = 0;
 	_uint x = 0;
-
 
 	for (i = 1; i < (min_number_of_members + 1); i++)
 	{
-		x = (x + (calculated_values[members[i]] * recover_multiplicative_part_2(field_char, min_number_of_members, members, i))) % field_char;
+		z = recover_multiplicative_part_2(field_char, min_number_of_members, members, i);
+		x = (x + (calculated_values[members[i]] * z)) % field_char;
+		//cout << "c(" << i << ")" << " * S(" << i << ")  = " << calculated_values[members[i]] << " * " << z << endl << endl;
 	}
 
 	return x;
@@ -225,15 +238,43 @@ int main()
 	_uint min_number_of_members;		// Минимальное количество участников разделения секрета
 	_uint number_of_secter_parts;		// Количество частей секрета
 	_uint secret;						// Сгенерированный секрет
-	_uint recovered_secret;				// Выщитанный секрет 
+	_uint recovered_secret;				// Выщитанный секрет
 	_uint *polynom = NULL;				// Сгенерированные коэффициенты многочлена
 	_uint *calculated_values = NULL;	// Вычесленные значения многочлена от всех участников
 	_uint *members = NULL;				// Список участников для восстановления секрета
 	bool p;								// Логическая проверка на простоту
 
+
+	/*
+	field_char = 13;
+	min_number_of_members = 3;
+	number_of_secter_parts = 5;
+
+	calculated_values = new _uint[number_of_secter_parts + 1];
+	members = new _uint[number_of_secter_parts + 1];
+
+
+	members[1] = 2;
+	members[2] = 3;
+	members[3] = 5;
+	calculated_values[1] = 0;
+	calculated_values[2] = 3;
+	calculated_values[3] = 7;
+	calculated_values[4] = 12;
+	calculated_values[5] = 5;
+	recovered_secret = recover_additive_part_1(field_char, min_number_of_members, members, calculated_values);
+	cout << endl << "secret= " << recovered_secret << endl;
+	delete[] calculated_values;
+	delete[] members;
+	
+	system("PAUSE");
+	return 0;
+	*/
+
 	cout << endl << "Enter PRIME field characteristic = ";
 	cin >> field_char;
 	p = prime(field_char);
+
 
 	// Проверка на простоту характеристики поля
 	if (p == true)
@@ -249,7 +290,7 @@ int main()
 		{
 			polynom = new _uint[min_number_of_members];
 			calculated_values = new _uint[number_of_secter_parts + 1];
-			members = new _uint[number_of_secter_parts];
+			members = new _uint[number_of_secter_parts + 1];
 
 			secret = generate_coef_polyniom(field_char, min_number_of_members, polynom);
 			find_min_number_of_members_and_1_values(field_char, min_number_of_members, polynom, number_of_secter_parts, calculated_values);
